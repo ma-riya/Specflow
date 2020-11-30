@@ -1,4 +1,9 @@
-﻿namespace SpecflowTests.Steps
+﻿using EmptyFiles;
+using SpecflowTests.Builders;
+using SpecflowTests.Models;
+using Category = SpecflowTests.Models.Category;
+
+namespace SpecflowTests.Steps
 {
     using Newtonsoft.Json;
     using Shouldly;
@@ -8,35 +13,34 @@
     using System.Net.Http;
     using System.Threading.Tasks;
     using TechTalk.SpecFlow;
-    /*
+
     [Binding]
     public class CategoryTestsSteps : BaseTestsSteps
     {
-        private HttpResponseMessage lastResponse;
-        public readonly ScenarioContext scenarioContext;
+        private readonly ScenarioContext scenarioContext;
 
         public CategoryTestsSteps(ScenarioContext scenarioContext)
         {
             this.scenarioContext = scenarioContext;
+            scenarioContext.Add("RestClient", restClient);
         }
 
         [AfterScenario("@categoryTest")]
-        public async Task DeleteMenu(ScenarioContext scenarioContext)
+        public void DeleteMenu(ScenarioContext context)
         {
-
-            if (scenarioContext.ContainsKey("Menu"))
+            if (context.ContainsKey("Menu"))
             {
-                if (menuz.id != null)
+                if (menu.id != null)
                 {
                     try
                     {
-                        lastResponse = await HttpRequestFactory.Delete(baseUrl, $"{menuPath}{menuResponse.id}");
+                        lastResponse = SendDeleteMenuRequest();
                         lastResponse.StatusCode.ShouldBe(HttpStatusCode.NoContent,
-                   $"Response from {lastResponse.RequestMessage.Method} {lastResponse.RequestMessage.RequestUri} was not as expected");
+                            $"Response from {lastResponse.Request.Method} {lastResponse.ResponseUri} was not as expected");
                     }
                     catch
                     {
-                        throw new Exception($"Menu could not be deleted. API response: {await lastResponse.Content.ReadAsStringAsync()}");
+                        throw new Exception($"Menu could not be deleted. API response: {lastResponse.Content}");
                     }
                 }
             }
@@ -45,19 +49,35 @@
         [Given(@"I have specified a category")]
         public void WhenIHaveSpecifiedACategory()
         {
+            createMenuRequest = new MenuBuilder().SetDefaultValues("Yumido Menu").Build();
+            createCategoryRequest = new CategoryBuilder().WithName("Vegan Category").Build();
             scenarioContext.Add("Menu", createMenuRequest);
             scenarioContext.Add("Category", createCategoryRequest);
         }
 
         [Given(@"a category in the menu already exists")]
-        public async Task GivenACategoryInTheMenuAlreadyExists()
+        public void GivenACategoryInTheMenuAlreadyExists()
         {
+            createMenuRequest = new MenuBuilder().SetDefaultValues("Yumido Menu").Build();
+            createCategoryRequest = new CategoryBuilder().WithName("Vegan Category").Build();
             scenarioContext.Add("Menu", createMenuRequest);
             scenarioContext.Add("Category", createCategoryRequest);
-            menuz = scenarioContext.Get<Menu>("Menu");
-            categoryz = scenarioContext.Get<Category>("Category");
-            lastResponse = await sendCreateCategory();
+      
+            menu = scenarioContext.Get<Menu>("Menu");
+            category = scenarioContext.Get<Category>("Category");
+            lastResponse = SendCreateCategoryRequest(createMenuRequest,createCategoryRequest);
+            scenarioContext.Add("Response", lastResponse);
+            
+            
+  
         }
+        
+        /*
+          
+         
+         
+         
+         
 
         [When(@"I create the category")]
         public async Task WhenICreateTheCategory()
@@ -101,6 +121,7 @@
             lastResponse.StatusCode.ShouldBe(HttpStatusCode.NoContent,
           $"Response from {lastResponse.RequestMessage.Method} {lastResponse.RequestMessage.RequestUri} was not as expected");
         }
+            */
     }
-    */
+
 }

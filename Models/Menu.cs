@@ -1,10 +1,10 @@
 ﻿using Newtonsoft.Json;
 
-namespace SpecflowTests
+namespace SpecflowTests.Models
 {
         public class Menu
         {
-        [JsonIgnore]
+            [JsonProperty("id")]
         public string id { get; set; }
 
         [JsonProperty("name")]

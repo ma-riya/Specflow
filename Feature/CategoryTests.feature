@@ -3,13 +3,13 @@
   I want to be able to create, delete and update categories
   So that customers know what categories exist in menus
 
-  #    @categoryTest
-   # Scenario: Create a category
-   #   Given an admin
-     # Given I have specified a category
-    #  When I create the category
-    # Then the category has been created
-    # And I can read the category returned
+  @categoryTest
+  Scenario: Create a category
+    Given an admin
+    Given I have specified a category
+    When I create the category
+    Then the category has been created
+    And I can read the category returned
 
      #  @categoryTest
   #Scenario: Admins can delete category

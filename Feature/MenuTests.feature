@@ -11,18 +11,19 @@
     Then the menu has been created
     And I can read the menu returned
 
-  #  Scenario: Admin can delete menus
- #   Given an admin
- #  And a menu already exists
- #  When I delete the menu
-   # Then the menu has been deleted
+  Scenario: Admin can delete menus
+    Given an admin
+    And a menu already exists
+    When I delete the menu
+    Then the menu has been deleted
 
-  #    @menuTest
-  # Scenario: Admin can update existing menus
-   # Given an admin
-   # And a menu already exists
-   # When I send an update menu request
-  # Then the menu is updated correctly
+  @menuTest
+  Scenario: Admin can update existing menus
+    Given an admin
+    And a menu already exists
+    When I send an update menu request
+    Then the menu is updated correctly
+    And I can read the updated menu 
 
 
  
